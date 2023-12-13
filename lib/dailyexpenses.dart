@@ -180,7 +180,9 @@ class _ExpenseListState extends State<ExpenseList> {
         txtDateController.text =
             res["datetime"].toString().substring(0,19).replaceAll('T', '');
       });
-      expenses.addAll(await Expense.loadAll());
+      Expense expenseInstance = Expense(0.0, '', '');
+
+      expenses.addAll(await expenseInstance.loadAll());
 
       setState(() {
         calculateTotal();

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'dailyexpenses.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -15,9 +17,43 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController showIpInSharedPreferences = TextEditingController();
+  TextEditingController newIpAddress = TextEditingController();
+
+
+  final String serverIpAdress = "http://192.168.0.119";
+
+  // Future<void> _getIpAddress() async{
+  //
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setString('ipAddress', server);
+  //
+  //   setState(() {
+  //     showIpInSharedPreferences.text = prefs.getString('ipAddress') ?? '';
+  //   });
+  // }
+
+  // Future<void> _setIpAddress() async{
+  //
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setString('ipAddress', serverIpAdress);
+  //   String newIP = newIpAddress.text;
+  //
+  //   setState(() {
+  //     showIpInSharedPreferences.text = newIP;
+  //   });
+  // }
+
+
+  @override
+  void initState(){
+    super.initState();
+    //_getIpAddress();
+    _setIpAddress();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +66,25 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/expenses4.jpg',),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'current IP address : ${serverIpAdress}',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                controller: newIpAddress,
+                decoration: const InputDecoration(
+                  labelText: 'New IP Address : ',
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
@@ -53,6 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
               String username = usernameController.text;
               String password = passwordController.text;
               if (username == 'ikmal' && password == '1') {
+                _setIpAddress();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -71,6 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: const Text('OK'),
                           onPressed: () {
                             Navigator.pop(context);
+
                           },
                         ),
                       ],
@@ -85,5 +142,20 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _setIpAddress() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(newIpAddress.text == ''){
+      prefs.setString('ipAddress', serverIpAdress);
+    }else{
+      prefs.setString('ipAddress', newIpAddress.text);
+    }
+
+    // String newIP = newIpAddress.text;
+    //
+    // setState(() {
+    //   showIpInSharedPreferences.text = newIP;
+    // });
   }
 }
