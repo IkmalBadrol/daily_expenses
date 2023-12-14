@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:daily_expenses/Controller/request_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Controller/sqlite_db.dart';
@@ -90,33 +88,6 @@ class Expense {
     return false;
   }
 
-  // Future<bool> delete() async {
-  //
-  //   //await SQLiteDB().delete(SQLiteTable, 'id' ,toJson());
-  //   // Check if the expense has an ID
-  //   if (id != null) {
-  //     // Update API endpoint based on user ID
-  //     //String apiEndpoint = "/api/expenses.php?id=$id";
-  //
-  //
-  //     // API operation for updating
-  //     RequestController req = RequestController(path: "/api/expenses.php");
-  //     //req.setBody(toJson());
-  //     await req.delete();
-  //     // Check the status of the API request
-  //     if (req.status() == 200) {
-  //       return true;
-  //     }
-  //     else{
-  //       if(await SQLiteDB().insert(SQLiteTable, toJson()) != 0){
-  //         return true;
-  //       }else {
-  //         return false;
-  //       }
-  //     }
-  //   }
-  //   return false;
-  // }
 
   Future<bool> delete() async {
     // Check if the expense has an ID

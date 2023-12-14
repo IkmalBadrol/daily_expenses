@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import 'dailyexpenses.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,28 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   final String serverIpAdress = "http://192.168.0.119";
-
-  // Future<void> _getIpAddress() async{
-  //
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('ipAddress', server);
-  //
-  //   setState(() {
-  //     showIpInSharedPreferences.text = prefs.getString('ipAddress') ?? '';
-  //   });
-  // }
-
-  // Future<void> _setIpAddress() async{
-  //
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('ipAddress', serverIpAdress);
-  //   String newIP = newIpAddress.text;
-  //
-  //   setState(() {
-  //     showIpInSharedPreferences.text = newIP;
-  //   });
-  // }
-
 
   @override
   void initState(){
@@ -144,6 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  // Use serverIpAddress if text field for new ip address is empty
+  // Use value in newIpAddress from user input as new ip address if the textfield is not empty
   Future<void> _setIpAddress() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(newIpAddress.text == ''){
@@ -151,11 +130,5 @@ class _LoginScreenState extends State<LoginScreen> {
     }else{
       prefs.setString('ipAddress', newIpAddress.text);
     }
-
-    // String newIP = newIpAddress.text;
-    //
-    // setState(() {
-    //   showIpInSharedPreferences.text = newIP;
-    // });
   }
 }
